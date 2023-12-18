@@ -1,10 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import StatsCard from './components/StatsCard';
+import RingProgress from './components/RingProgress';
 
 export default function App() {
   return (
     <View style={styles.container}>
+      <RingProgress />
       <View style={styles.statsContainer}>
         <StatsCard label='Steps' value={1219} />
         <StatsCard label='Distance' value={`${0.75} Km`} />
@@ -21,7 +23,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 12,
+    padding: 20,
+    gap: 60,
   },
   statsContainer: {
     display: 'flex',
