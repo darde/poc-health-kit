@@ -1,71 +1,18 @@
+import '@tamagui/core/'
+import { TamaguiProvider } from 'tamagui'
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import StatsCard from './components/StatsCard';
-import RingProgress from './components/RingProgress';
-import AppleHealthKit, { HealthInputOptions, HealthKitPermissions } from 'react-native-health'
-import { useEffect, useState } from 'react';
-
-const permissiions: HealthKitPermissions = {
-  permissions: {
-    read: [
-      AppleHealthKit.Constants.Permissions.StepCount,
-      AppleHealthKit.Constants.Permissions.DateOfBirth,
-      AppleHealthKit.Constants.Permissions.BiologicalSex,
-      AppleHealthKit.Constants.Permissions.Height,
-      AppleHealthKit.Constants.Permissions.Weight,
-    ],
-    write: [],
-  }
-}
-
-const STEPS_GOAL = 10000
+import Home from './components/screens/Home'
+import config from './tamagui.config'
 
 export default function App() {
-  const [hasPermissions, setHasPermissions] = useState(false)
-  const [steps, setSteps] = useState(0)
-
-  useEffect(() => {
-    AppleHealthKit.initHealthKit(permissiions, (err) => {
-      if (err) {
-        console.log('Error getting permissions. ', err)
-        return
-      }
-
-      setHasPermissions(true)
-    })
-  }, [])
-
-  useEffect(() => {
-    if (!hasPermissions) {
-      return
-    }
-
-    const options: HealthInputOptions = {
-      date: new Date().toISOString(),
-      includeManuallyAdded: false,
-    }
-
-    AppleHealthKit.getStepCount(options, (err, results) => {
-      if (err) {
-        console.log('Error getting the stpes. ', err)
-        return
-      }
-
-      setSteps(results.value)
-      console.log('steps results: ', results.value)
-    })
-  }, [hasPermissions])
-
   return (
-    <View style={styles.container}>
-      <RingProgress progress={steps / STEPS_GOAL} />
-      <View style={styles.statsContainer}>
-        <StatsCard label='Steps' value={steps.toString()} />
-        <StatsCard label='Distance' value={`${0.75} Km`} />
-        <StatsCard label='Flights Climbed' value={3} />
+    <TamaguiProvider config={config}>
+      <View style={styles.container}>
+        <Home />
+        <StatusBar style="auto" />
       </View>
-      <StatusBar style="auto" />
-    </View>
+    </TamaguiProvider>
   );
 }
 
@@ -76,7 +23,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 20,
-    gap: 60,
+    gap: 6,
   },
   statsContainer: {
     display: 'flex',
