@@ -1,34 +1,29 @@
-import '@tamagui/core/'
-import { TamaguiProvider } from 'tamagui'
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import Home from './components/screens/Home'
-import config from './tamagui.config'
+import "@tamagui/core/";
+// import { TamaguiProvider } from "tamagui";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View } from "react-native";
+import HomeStack from "./app/_layout";
+import { useEffect } from "react";
 
 export default function App() {
-  return (
-    <TamaguiProvider config={config}>
-      <View style={styles.container}>
-        <Home />
-        <StatusBar style="auto" />
-      </View>
-    </TamaguiProvider>
-  );
+  // const [loaded] = useFonts({
+  //   Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
+  //   InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
+  // });
+
+  useEffect(() => {
+    console.log("loaded!!!!");
+  }, []);
+
+  return <HomeStack />;
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-    gap: 6,
-  },
-  statsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 20,
+    width: "100%",
+    backgroundColor: "black",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

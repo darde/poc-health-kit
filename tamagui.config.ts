@@ -3,11 +3,42 @@
 // for reanimated: @tamagui/config/v2-reanimated
 
 // for react-native only: @tamagui/config/v2-native
-
 import { config } from '@tamagui/config/v2-native'
-import { createTamagui } from 'tamagui'
+import { createTamagui, createTokens } from 'tamagui'
+import { createInterFont } from '@tamagui/font-inter';
+import { themes } from '@tamagui/themes';
+import { VariableVal } from '@tamagui/core';
 
-const tamaguiConfig = createTamagui(config)
+const headingFont = createInterFont();
+
+const bodyFont = createInterFont();
+
+type TokensProps = {
+  [key: string]: VariableVal
+}
+
+
+const tamaguiConfig = createTamagui({
+  ...config,
+  defaultFont: 'body',
+    shouldAddPrefersColorThemes: true,
+    themeClassNameOnRoot: true,
+    fonts: {
+      body: bodyFont,
+      heading: headingFont,
+    },
+    themes: {
+      dark: {
+        background: 'black',
+        color: 'white',
+      },
+      light: {
+        background: 'red',
+        color: 'black',
+      },
+    },
+    // tokens,
+})
 // this makes typescript properly type everything based on the config
 
 type Conf = typeof tamaguiConfig
